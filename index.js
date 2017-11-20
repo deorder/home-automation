@@ -39,6 +39,7 @@ async function group_lights_off_timer_reschedule({groupname, seconds}) {
   // Some lights in group turned on?
   if(group_lights.some((device) => device.on === true)) {
     console.log(`rescheduling '${groupname}' lights off in '${String(seconds)}' seconds`);
+    // Remove existing timer and reschedule to run after x seconds
     clearTimeout(groups[groupname].timeout); groups[groupname].timeout = setTimeout(async function() {
       console.log(`turning off '${groupname}' lights`);
       try {
