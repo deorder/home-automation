@@ -105,10 +105,6 @@ async function automation() {
       console.log(`could not update device state: ${e.message}`);
       console.error(e.stack);
     }
-  }).on("device removed", (device) => {
-    console.log(`removing '${device.name}' device`);
-    Reflect.deleteProperty(tradfri_devices, device.name);
-    Reflect.deleteProperty(devices, device.name);
   }).observeDevices();
 
   // Retrieve and monitor all tradfri group states
@@ -129,10 +125,6 @@ async function automation() {
       console.log(`could not update group state: ${e.message}`);
       console.error(e.stack);
     }
-  }).on("group removed", (group) => {
-    console.log(`removing '${group.name}' group`);
-    Reflect.deleteProperty(tradfri_groups, group.name);
-    Reflect.deleteProperty(groups, group.name);
   }).observeGroupsAndScenes();
 
   // Listen for messages on subscribed topics
