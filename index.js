@@ -19,7 +19,6 @@ const tradfri_devices_by_name = {}, tradfri_devices_by_id = {};
 const mqtt = mqtt_client.connect(config.mqtt.url), tradfri = new tradfri_client(config.tradfri.hostname);
 
 // Check if time range contains now
-
 async function time_range_contains({start, end, now}) {
     const moment_start = moment(start), moment_end = moment(end), moment_now = moment(now);
     if(moment_now.isAfter(moment_end) && moment_end.isBefore(moment_start)) {
