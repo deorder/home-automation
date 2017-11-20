@@ -111,7 +111,7 @@ async function automation() {
     Reflect.deleteProperty(groups, group.name);
   }).observeGroupsAndScenes();
 
-  // Listen for messaged on subscribed topics
+  // Listen for messages on subscribed topics
   mqtt.on('message', async function(topic, message) {
     switch(topic) {
 
