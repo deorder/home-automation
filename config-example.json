@@ -1,6 +1,6 @@
 {
   "tradfri": {
-    "name": "Name you want to identify as to Tradfri gateway",
+    "identity": "Name you want to identify as to Tradfri gateway",
     "hostname": "Hostname of your Tradfri gateway",
     "psk": "Preshared-key you got from your Tradfri gateway"
   },
