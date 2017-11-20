@@ -1,0 +1,15 @@
+{
+  "name": "house-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "moment": "~2.19.x",
+    "mqtt": "~2.14.x",
+    "node-tradfri-client": "~0.4.x",
+    "suncalc": "~1.8.x",
+    "twix": "~1.2.x"
+  },
+  "author": "Deorder",
+  "license": "MIT"
+}

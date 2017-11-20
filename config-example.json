@@ -1,0 +1,22 @@
+{
+  "tradfri": {
+    "name": "Name you want to identify as to Tradfri gateway",
+    "hostname": "Hostname of your Tradfri gateway",
+    "psk": "Preshared-key you got from your Tradfri gateway"
+  },
+  "mqtt": {
+    "url": "mqtt://<URL to access your MQTT broker>",
+    "subscriptions": [
+      "Topics you want MQTT to subscribe to"
+    ]
+  },
+  "location": {
+    "longitude": 5.00, "latitude": 52
+  },
+  "living_room": {
+    "camera": {
+      "topic": "MQTT topic of your camera"
+    },
+    "name": "Living Room"
+  }
+}
