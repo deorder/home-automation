@@ -15,11 +15,11 @@ Home Automation using NodeJS
 
 ## Modify automation according to your requirements
 
-Edit the `index.js` file as needed. Read the comments.
+Go to the cloned directory. Open and edit the `index.js` file as needed. Read the comments.
 
 ## Running automation
 
-Do the following to start the automation:
+Execute the following from the cloned directory to start the automation:
 
 ```
 node index.js
