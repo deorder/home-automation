@@ -34,7 +34,9 @@ const group_lights_get = (groupname) => groups[groupname].devices.map((name) => 
 
 // Automatically turn off lights of specified group after x seconds
 async function group_lights_off_timer_reschedule({groupname, seconds}) {
-  const group_lights = group_lights_get(groupname); 
+  const group_lights = group_lights_get(groupname);
+
+  // Some lights in group turned on?
   if(group_lights.some((device) => device.on === true)) {
     console.log(`rescheduling '${groupname}' lights off in '${String(seconds)}' seconds`);
     clearTimeout(groups[groupname].timeout); groups[groupname].timeout = setTimeout(async function() {
@@ -54,8 +56,12 @@ async function group_lights_auto_on({groupname}) {
   const now = new Date();
   const group_lights = group_lights_get(groupname);
   const times = suncalc.getTimes(now, config.latitude, config.longitude);
+
+  // Time between golden hour and sunrise end?
   if(time_range_contains({start: times.goldenHour, end: times.sunriseEnd, now})) {
+    // Every light in group turned off?
     if(group_lights.every((device) => device.on === false)) {
+      // Every light did not change its state in the last 5 seconds?
       if(group_lights.every((device) => (new Date() - device.updated) > (5 * 1000))) {
         console.log(`turning on '${groupname}' lights`);
         try {
@@ -82,6 +88,13 @@ async function automation() {
       tradfri_devices_by_name[device.name] = tradfri_devices_by_id[device.instanceId] = device;
       if(device.type === tradfri_accessory_types.lightbulb) { 
         devices[device.name] = {name: device.name, updated: new Date(), type: 'light', on: device.lightList.every((light) => light.onOff === true)};
+
+        // Single light turned off?
+        if(devices[device.name].on === false) {
+          // Set state of turned off light
+          await tradfri.operateLight(device, {colorTemperature: 50 /* 50% */});
+        }
+
       } else {
         devices[device.name] = {name: device.name, updated: new Date(), type: 'unknown'};
       }
@@ -101,6 +114,14 @@ async function automation() {
     try {
       tradfri_groups_by_name[group.name] = tradfri_groups_by_id[group.instanceId] = group;
       groups[group.name] = {name: group.name, updated: new Date(), devices: group.deviceIDs.map((id) => tradfri_devices_by_id[id].name)};
+
+      // Every light in group turned off?
+      const group_lights = group_lights_get(group.name);
+      if(group_lights.every((device) => device.on === false)) {
+        // Set state of all turned off lights
+        await Promise.all(group_lights.map((device) => tradfri_devices_by_name[device.name]).map((device) => tradfri.operateLight(device, {colorTemperature: 50 /* 50% */})));
+      }
+
     } catch(e) {
       console.log(`could not update group state: ${e.message}`);
       console.error(e.stack);
