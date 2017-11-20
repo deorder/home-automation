@@ -117,7 +117,7 @@ async function automation() {
       // Every light in group turned off?
       const group_lights = group_lights_get(group.name);
       if(group_lights.every((device) => device.on === false)) {
-        // Set state of all turned off lights
+        // Set state of all turned off lights in group
         await Promise.all(group_lights.map((device) => tradfri_devices_by_name[device.name]).map((device) => tradfri.operateLight(device, {colorTemperature: 50 /* 50% */})));
       }
 
