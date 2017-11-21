@@ -78,7 +78,7 @@ async function group_lights_auto_on({groupname}) {
   }
 }
 
-// Automation main
+// Automation routine
 async function automation() {
 
   // Connect to tradfri gateway
