@@ -1,5 +1,5 @@
 # Home Automation
-Home Automation using NodeJS
+Home Automation example using NodeJS
 
 ## Installation 
 
