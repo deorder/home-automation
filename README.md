@@ -1,5 +1,5 @@
 # Home Automation
-Home Automation example using NodeJS
+Home automation example using NodeJS. It should end up as small recipes that can be reused and adapted as needed.
 
 ## Installation 
 
