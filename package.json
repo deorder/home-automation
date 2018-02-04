@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "moment": "~2.19.x",
-    "mqtt": "~2.14.x",
-    "node-tradfri-client": "~0.4.x",
+    "node-tradfri-client": "~0.7.x",
     "suncalc": "~1.8.x",
-    "twix": "~1.2.x"
+    "moment": "~2.20.x",
+    "mqtt": "~2.15.x",
+    "twix": "~1.2.x",
+    "ws": "~4.0.x"
   },
   "author": "Deorder",
   "license": "MIT"

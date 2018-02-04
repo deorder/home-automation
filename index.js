@@ -2,10 +2,11 @@
 
 const config = require("./config");
 
+const mqtt_client = require("mqtt");
+
 const suncalc = require("suncalc");
 const moment = require("moment"), twix = require("twix");
 
-const mqtt_client = require("mqtt");
 const tradfri_client = require("node-tradfri-client").TradfriClient;
 const tradfri_accessory = require("node-tradfri-client").Accessory;
 const tradfri_accessory_types = require("node-tradfri-client").AccessoryTypes;
@@ -19,7 +20,7 @@ const tradfri_devices_by_name = {}, tradfri_devices_by_id = {};
 const mqtt = mqtt_client.connect(config.mqtt.url), tradfri = new tradfri_client(config.tradfri.hostname);
 
 // Check if time range contains now
-async function time_range_contains({start, end, now}) {
+function time_range_contains({start, end, now}) {
     const moment_start = moment(start), moment_end = moment(end), moment_now = moment(now);
     if(moment_now.isAfter(moment_end) && moment_end.isBefore(moment_start)) {
         moment_end.add(1, 'day');
@@ -57,7 +58,7 @@ async function group_lights_off_timer_reschedule({groupname, seconds}) {
 async function group_lights_auto_on({groupname}) {
   const now = new Date();
   const group_lights = group_lights_get(groupname);
-  const times = suncalc.getTimes(now, config.latitude, config.longitude);
+  const times = suncalc.getTimes(now, config.location.latitude, config.location.longitude);
 
   // Time between golden hour and sunrise end?
   if(time_range_contains({start: times.goldenHour, end: times.sunriseEnd, now})) {
